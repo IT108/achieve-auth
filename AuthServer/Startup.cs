@@ -51,7 +51,7 @@ namespace AuthServer
 			{
 				options.AddPolicy("AllowSpecificOrigin",
 					builder => builder
-						.WithOrigins("http://localhost:4200")
+						.WithOrigins("http://localhost:4200", "https://my.it108.org")
 						.AllowAnyHeader()
 						.AllowAnyMethod()
 						.AllowCredentials()

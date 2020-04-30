@@ -191,6 +191,22 @@ namespace AuthServer.Controllers
 			return StatusCode(StatusCodes.Status404NotFound);
 		}
 
+
+		[HttpPost]
+		[Route("api/[controller]/getUser")]
+		public async Task<IActionResult> getUser([FromQuery] [Required] string username, [FromQuery] [Required] string key)
+		{
+			if (key != _config["KEY"])
+			{
+				return StatusCode(StatusCodes.Status401Unauthorized);
+			}
+			var user = await _userManager.FindByNameAsync(username);
+			if (user != null)
+				return Ok(user);
+				
+			return StatusCode(StatusCodes.Status404NotFound);
+		}
+
 		[EnableCors]
 		[HttpPost]
 		[Route("api/[controller]")]
