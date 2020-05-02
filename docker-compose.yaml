@@ -11,7 +11,6 @@ services:
         DB__DATABASE: ${DB_DATABASE}
         DB__USERNAME: ${DB_USERNAME}
         DB__PASSWORD: ${DB_PASSWORD}
-        }
     ports:
       - "${AUTH_PORT_PROD}:80"
     restart: always
