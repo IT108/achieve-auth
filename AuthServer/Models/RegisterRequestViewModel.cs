@@ -12,6 +12,10 @@ namespace AuthServer.Models
 		public string Name { get; set; }
 
 		[Required]
+		[Display(Name = "Surname")]
+		public string Surname { get; set; }
+
+		[Required]
 		[EmailAddress]
 		[Display(Name = "Email")]
 		public string Email { get; set; }
@@ -35,7 +39,7 @@ namespace AuthServer.Models
 		[Required]
 		[Display(Name = "Groups")]
 		public string[] Groups { get; set; }
-		
+
 		[Required]
 		[Display(Name = "Interests")]
 		public string[] Interests { get; set; }

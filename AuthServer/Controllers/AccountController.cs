@@ -17,6 +17,12 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.Extensions.Configuration;
 using System.ComponentModel.DataAnnotations;
 using AutoMapper.Configuration;
+using achieve_lib.Requests;
+using AuthServer.Utils;
+using Newtonsoft.Json;
+using achieve_lib.BL;
+using System.Collections.Generic;
+using achieve_lib.AD;
 
 namespace AuthServer.Controllers
 {
@@ -203,7 +209,7 @@ namespace AuthServer.Controllers
 			var user = await _userManager.FindByNameAsync(username);
 			if (user != null)
 				return Ok(user);
-				
+
 			return StatusCode(StatusCodes.Status404NotFound);
 		}
 
@@ -231,9 +237,30 @@ namespace AuthServer.Controllers
 				Domain = model.Domain
 			};
 
+
 			var result = await _userManager.CreateAsync(user, model.Password);
-			//TODO: api request role
 			if (!result.Succeeded) return BadRequest(result.Errors);
+
+			var appUser = new User()
+			{
+				AdUser = new ADUser()
+				{
+					Username = model.DomainUsername,
+					Groups = new List<string>(model.Groups)
+				},
+				Interests = new List<string>(model.Interests),
+				Name = model.Name,
+				Surname = model.Surname,
+				IdentityId = (await _userManager.FindByEmailAsync(model.Email)).Id
+			};
+
+			var appRegister = new CreateUserRequest()
+			{
+				Key = _config["KEY"],
+				User = appUser
+			};
+
+			Api.MakeRequest(_config["API_ADDRESS"] + "/Identity/createUser", JsonConvert.SerializeObject(appRegister));
 
 			await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("username", user.UserName));
 			await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim("name", user.Name));

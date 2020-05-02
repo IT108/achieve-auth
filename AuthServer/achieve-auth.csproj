@@ -8,6 +8,7 @@
 
 
   <ItemGroup>
+    <PackageReference Include="achieve-lib" Version="0.2.5" />
     <PackageReference Include="IdentityServer4" Version="3.1.2" />
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3">
