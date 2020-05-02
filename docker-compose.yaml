@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  achieve_auth:
+    image: docker.pkg.github.com/it108/achieve-auth/achieve-auth:${GITHUB_SHA}
+    container_name: achieve_auth
+    environment:
+        KEY: ${API_TOKEN}
+        API_ADDRESS: ${API_ADDRESS}
+        DB__SERVER: ${DB_SERVER}
+        DB__DATABASE: ${DB_DATABASE}
+        DB__USERNAME: ${DB_USERNAME}
+        DB__PASSWORD: ${DB_PASSWORD}
+        }
+    ports:
+      - "${AUTH_PORT_PROD}:80"
+    restart: always
+    networks:
+      - achieve_auth_prod
+
+networks:
+  achieve_auth_prod:
