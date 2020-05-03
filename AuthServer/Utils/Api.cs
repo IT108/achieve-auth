@@ -25,6 +25,8 @@ namespace AuthServer.Utils
 			dataStream.Write(byteArray, 0, byteArray.Length);
 			dataStream.Close();
 
+			Console.WriteLine($"Requesting API:{Environment.NewLine}URL:{url} {Environment.NewLine} DATA: {data}");
+
 			var webRequestResponse = request.GetResponse();
 		}
 	}
