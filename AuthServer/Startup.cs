@@ -63,7 +63,13 @@ namespace AuthServer
 				.AddEntityFrameworkStores<AppIdentityDbContext>()
 				.AddDefaultTokenProviders();
 
-			services.AddIdentityServer()
+			var authority = "https://auth.it108.org";
+
+			services.AddIdentityServer(options =>
+			{
+				options.IssuerUri = authority;
+				options.PublicOrigin = authority;
+			})
 				.AddDeveloperSigningCredential()
 				.AddTestUsers(TestUsers.Users)
 				// this adds the operational data from DB (codes, tokens, consents)
