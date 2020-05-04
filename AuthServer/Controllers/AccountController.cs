@@ -243,6 +243,7 @@ namespace AuthServer.Controllers
 
 			var appUser = new User()
 			{
+				Email = model.Email,
 				AdUser = new ADUser()
 				{
 					Username = model.DomainUsername,
